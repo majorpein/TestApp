@@ -10,6 +10,6 @@
 
 @interface DummyAPIClass : NSObject
 
-+ (NSData *)sendDummySynchronousRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error;
++ (NSData *)sendDummySynchronousRequest:(NSString *)request returningResponse:(NSURLResponse **)response error:(NSError **)error;
 
 @end

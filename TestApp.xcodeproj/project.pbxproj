@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A74D85E1AC2B62500D1EDEC /* ErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A74D85D1AC2B62500D1EDEC /* ErrorHandler.m */; };
+		5A74D8641AC2CB0200D1EDEC /* CachedImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A74D8631AC2CB0200D1EDEC /* CachedImages.m */; };
+		5A74D8671AC2E4E500D1EDEC /* ArticleDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A74D8661AC2E4E500D1EDEC /* ArticleDetailController.m */; };
 		A6006D321AC2001D0097692E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6006D311AC2001D0097692E /* main.m */; };
 		A6006D351AC2001D0097692E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6006D341AC2001D0097692E /* AppDelegate.m */; };
 		A6006D3E1AC2001D0097692E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6006D3C1AC2001D0097692E /* Main.storyboard */; };
@@ -34,6 +37,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A74D85C1AC2B62500D1EDEC /* ErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorHandler.h; sourceTree = "<group>"; };
+		5A74D85D1AC2B62500D1EDEC /* ErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorHandler.m; sourceTree = "<group>"; };
+		5A74D8621AC2CB0200D1EDEC /* CachedImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedImages.h; sourceTree = "<group>"; };
+		5A74D8631AC2CB0200D1EDEC /* CachedImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedImages.m; sourceTree = "<group>"; };
+		5A74D8651AC2E4E500D1EDEC /* ArticleDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleDetailController.h; sourceTree = "<group>"; };
+		5A74D8661AC2E4E500D1EDEC /* ArticleDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleDetailController.m; sourceTree = "<group>"; };
 		A6006D2C1AC2001D0097692E /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6006D301AC2001D0097692E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A6006D311AC2001D0097692E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -102,22 +111,28 @@
 		A6006D2E1AC2001D0097692E /* TestApp */ = {
 			isa = PBXGroup;
 			children = (
-				A6006D581AC200750097692E /* ArticlesController.h */,
-				A6006D591AC200750097692E /* ArticlesController.m */,
+				5A74D8621AC2CB0200D1EDEC /* CachedImages.h */,
+				5A74D8631AC2CB0200D1EDEC /* CachedImages.m */,
+				5A74D85C1AC2B62500D1EDEC /* ErrorHandler.h */,
+				5A74D85D1AC2B62500D1EDEC /* ErrorHandler.m */,
 				A6006D5A1AC200750097692E /* AuthController.h */,
 				A6006D5B1AC200750097692E /* AuthController.m */,
-				A6006D5C1AC200750097692E /* DummyAPIClass.h */,
-				A6006D5D1AC200750097692E /* DummyAPIClass.m */,
+				A6006D641AC200750097692E /* RegistrationController.h */,
+				A6006D651AC200750097692E /* RegistrationController.m */,
+				A6006D581AC200750097692E /* ArticlesController.h */,
+				A6006D591AC200750097692E /* ArticlesController.m */,
+				5A74D8651AC2E4E500D1EDEC /* ArticleDetailController.h */,
+				5A74D8661AC2E4E500D1EDEC /* ArticleDetailController.m */,
 				A6006D5E1AC200750097692E /* EventsController.h */,
 				A6006D5F1AC200750097692E /* EventsController.m */,
 				A6006D601AC200750097692E /* ProfileController.h */,
 				A6006D611AC200750097692E /* ProfileController.m */,
 				A6006D621AC200750097692E /* ProfileEditingController.h */,
 				A6006D631AC200750097692E /* ProfileEditingController.m */,
-				A6006D641AC200750097692E /* RegistrationController.h */,
-				A6006D651AC200750097692E /* RegistrationController.m */,
 				A6006D661AC200750097692E /* RESTRequestsManager.h */,
 				A6006D671AC200750097692E /* RESTRequestsManager.m */,
+				A6006D5C1AC200750097692E /* DummyAPIClass.h */,
+				A6006D5D1AC200750097692E /* DummyAPIClass.m */,
 				A6006D331AC2001D0097692E /* AppDelegate.h */,
 				A6006D341AC2001D0097692E /* AppDelegate.m */,
 				A6006D3C1AC2001D0097692E /* Main.storyboard */,
@@ -256,6 +271,7 @@
 			files = (
 				A6006D681AC200750097692E /* ArticlesController.m in Sources */,
 				A6006D6F1AC200750097692E /* RESTRequestsManager.m in Sources */,
+				5A74D85E1AC2B62500D1EDEC /* ErrorHandler.m in Sources */,
 				A6006D691AC200750097692E /* AuthController.m in Sources */,
 				A6006D6B1AC200750097692E /* EventsController.m in Sources */,
 				A6006D351AC2001D0097692E /* AppDelegate.m in Sources */,
@@ -263,7 +279,9 @@
 				A6006D6A1AC200750097692E /* DummyAPIClass.m in Sources */,
 				A6006D6D1AC200750097692E /* ProfileEditingController.m in Sources */,
 				A6006D6E1AC200750097692E /* RegistrationController.m in Sources */,
+				5A74D8671AC2E4E500D1EDEC /* ArticleDetailController.m in Sources */,
 				A6006D321AC2001D0097692E /* main.m in Sources */,
+				5A74D8641AC2CB0200D1EDEC /* CachedImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +472,7 @@
 				A6006D541AC2001D0097692E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A6006D551AC2001D0097692E /* Build configuration list for PBXNativeTarget "TestAppTests" */ = {
 			isa = XCConfigurationList;
@@ -462,6 +481,7 @@
 				A6006D571AC2001D0097692E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

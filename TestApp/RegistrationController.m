@@ -7,6 +7,7 @@
 //
 
 #import "RegistrationController.h"
+#import "RESTRequestsManager.h"
 
 @interface RegistrationController ()
 
@@ -18,6 +19,9 @@
 @end
 
 @implementation RegistrationController
+
+@synthesize authController;
+@synthesize nameCell, emailCell, phoneCell, passCell;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,15 +39,33 @@
 }
 
 - (IBAction) onDoneClick:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:[(UITextField *)[self.nameCell.contentView viewWithTag:kTextFieldTag] text], @"fio", [(UITextField *)[self.emailCell.contentView viewWithTag:kTextFieldTag] text], @"email", [(UITextField *)[self.phoneCell.contentView viewWithTag:kTextFieldTag] text], @"phone", [(UITextField *)[self.passCell.contentView viewWithTag:kTextFieldTag] text], @"password", nil];
+        
+        NSError *error;
+        
+        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:@"user" method:@"POST" withParams:params error:&error];
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.authController tryToLoginWithResult:result error:error];
+        }];
+    });
 }
 
 - (IBAction) onCancelClick:(id)sender {
+    
+    [(UITextField *)[self.nameCell.contentView viewWithTag:kTextFieldTag] setText:@""];
+    [(UITextField *)[self.emailCell.contentView viewWithTag:kTextFieldTag] setText:@""];
+    [(UITextField *)[self.phoneCell.contentView viewWithTag:kTextFieldTag] setText:@""];
+    [(UITextField *)[self.passCell.contentView viewWithTag:kTextFieldTag] setText:@""];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
-
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
@@ -55,7 +77,7 @@
     // Return the number of rows in the section.
     return 0;
 }
-
+*/
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
@@ -109,5 +131,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [(UITextField *)[self.nameCell.contentView viewWithTag:kTextFieldTag] resignFirstResponder];
+    [(UITextField *)[self.emailCell.contentView viewWithTag:kTextFieldTag] resignFirstResponder];
+    [(UITextField *)[self.phoneCell.contentView viewWithTag:kTextFieldTag] resignFirstResponder];
+    [(UITextField *)[self.passCell.contentView viewWithTag:kTextFieldTag] resignFirstResponder];
+}
 
 @end

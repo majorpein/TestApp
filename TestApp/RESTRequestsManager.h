@@ -10,6 +10,6 @@
 
 @interface RESTRequestsManager : NSObject
 
-+ (NSData *) sendSynchroniousRequestWithString:(NSString *)appendingString method:(NSString *)method withParams:(NSDictionary *)params error:(NSError **)error;
++ (NSDictionary *) sendSynchroniousRequestWithString:(NSString *)appendingString method:(NSString *)method withParams:(NSDictionary *)params error:(NSError **)error;
 
 @end

@@ -11,5 +11,7 @@
 @interface AuthController : UIViewController
 
 + (void) presentAuthController;
+- (void) showAnimatingIndicator;
+- (void) tryToLoginWithResult:(NSDictionary *)result error:(NSError *)error;
 
 @end

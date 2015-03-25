@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AuthController.h"
+
+#define kTextFieldTag 27
 
 @interface RegistrationController : UITableViewController
+
+@property (weak) AuthController *authController;
 
 @end

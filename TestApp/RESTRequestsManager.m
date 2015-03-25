@@ -13,14 +13,17 @@
 
 NSString * const apiURL = @"http://dummyapi";
 
-+ (NSData *) sendSynchroniousRequestWithString:(NSString *)appendingString method:(NSString *)method withParams:(NSDictionary *)params error:(NSError **)error {
++ (NSDictionary *) sendSynchroniousRequestWithString:(NSString *)appendingString method:(NSString *)method withParams:(NSDictionary *)params error:(NSError **)error {
     
     NSURL *url = [[NSURL URLWithString:apiURL] URLByAppendingPathComponent:appendingString];
+    NSLog(@"Request URL: %@", url);
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     
     [request setHTTPMethod:method];
+    NSLog(@"Request method: %@", method);
     
+    NSLog(@"With params: %@", params);
     for (NSString *key in [params allKeys]) {
         [request setValue:[params objectForKey:key] forHTTPHeaderField:key];
     }
@@ -34,7 +37,18 @@ NSString * const apiURL = @"http://dummyapi";
     
     NSData *data = [DummyAPIClass sendDummySynchronousRequest:appendingString returningResponse:&response error:error];
     
-    return data;
+    if (data == nil) {
+        return nil;
+    }
+    id dataDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:error];
+    NSLog(@"Answer: %@", dataDic);
+    if ([dataDic isKindOfClass:[NSDictionary class]] && [dataDic count]) {
+        id result = [dataDic objectForKey:@"result"];
+        if ([result isKindOfClass:[NSDictionary class]] && [result count]) {
+            return result;
+        }
+    }
+    return nil;
 }
 
 @end
