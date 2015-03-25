@@ -55,7 +55,7 @@
             if (![code isEqualToString:@"200"]) {
                 [ErrorHandler handleError:error];
             } else {
-                [self.avatarNameCell.textLabel setText:[user objectForKey:@"fio"]];
+                [(UILabel *)[self.avatarNameCell.contentView viewWithTag:kProfileLabelTag] setText:[user objectForKey:@"fio"]];
                 [self.emailCell.textLabel setText:[user objectForKey:@"email"]];
                 [self.phoneCell.textLabel setText:[user objectForKey:@"phone"]];
                 [self setActualImageViewFromURL:[user objectForKey:@"avatar"]];
@@ -71,13 +71,13 @@
     }];
     dispatch_sync(dispatch_get_main_queue(), ^{
         if (img) {
-            [[self.avatarNameCell.imageView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-            [self.avatarNameCell.imageView setImage:img];
+            [[[self.avatarNameCell.contentView viewWithTag:kProfileImageTag] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [(UIImageView *)[self.avatarNameCell.contentView viewWithTag:kProfileImageTag] setImage:img];
         } else {
             UIActivityIndicatorView *act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-            [act setCenter:CGPointMake(self.avatarNameCell.imageView.frame.size.width/2, self.avatarNameCell.imageView.frame.size.height/2)];
+            [act setCenter:CGPointMake([self.avatarNameCell.contentView viewWithTag:kProfileImageTag].frame.size.width/2, [self.avatarNameCell.contentView viewWithTag:kProfileImageTag].frame.size.height/2)];
             [act startAnimating];
-            [self.avatarNameCell.imageView addSubview:act];
+            [[self.avatarNameCell.contentView viewWithTag:kProfileImageTag] addSubview:act];
         }
     });
 }

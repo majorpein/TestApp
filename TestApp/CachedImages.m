@@ -35,13 +35,19 @@
             [newImages addObject:newImgDict];
             [[NSUserDefaults standardUserDefaults] setObject:newImages forKey:@"CachedImages"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            predicate();
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                predicate();
+            });
             //NSLog(@"Image was out of date, downloaded new: %@", cachedImg);
         });
     }
     
-    if (cachedImg != nil)
+    if (cachedImg != nil) {
+        NSLog(@"returning cached image");
         return [UIImage imageWithData:[cachedImg objectForKey:@"image"]];
+    }
+
+    NSLog(@"returning nil");
     return nil;
 }
 

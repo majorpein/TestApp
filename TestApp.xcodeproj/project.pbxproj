@@ -24,6 +24,9 @@
 		A6006D6D1AC200750097692E /* ProfileEditingController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6006D631AC200750097692E /* ProfileEditingController.m */; };
 		A6006D6E1AC200750097692E /* RegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6006D651AC200750097692E /* RegistrationController.m */; };
 		A6006D6F1AC200750097692E /* RESTRequestsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A6006D671AC200750097692E /* RESTRequestsManager.m */; };
+		A6D3A2FD1AC367C100D82D02 /* EventsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D3A2FC1AC367C100D82D02 /* EventsDetailController.m */; };
+		A6D3A3001AC3711C00D82D02 /* MasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D3A2FF1AC3711C00D82D02 /* MasterController.m */; };
+		A6D3A3031AC3712700D82D02 /* DetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D3A3021AC3712700D82D02 /* DetailController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +73,12 @@
 		A6006D651AC200750097692E /* RegistrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationController.m; sourceTree = "<group>"; };
 		A6006D661AC200750097692E /* RESTRequestsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESTRequestsManager.h; sourceTree = "<group>"; };
 		A6006D671AC200750097692E /* RESTRequestsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTRequestsManager.m; sourceTree = "<group>"; };
+		A6D3A2FB1AC367C100D82D02 /* EventsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsDetailController.h; sourceTree = "<group>"; };
+		A6D3A2FC1AC367C100D82D02 /* EventsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsDetailController.m; sourceTree = "<group>"; };
+		A6D3A2FE1AC3711C00D82D02 /* MasterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterController.h; sourceTree = "<group>"; };
+		A6D3A2FF1AC3711C00D82D02 /* MasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterController.m; sourceTree = "<group>"; };
+		A6D3A3011AC3712700D82D02 /* DetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailController.h; sourceTree = "<group>"; };
+		A6D3A3021AC3712700D82D02 /* DetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,12 +128,18 @@
 				A6006D5B1AC200750097692E /* AuthController.m */,
 				A6006D641AC200750097692E /* RegistrationController.h */,
 				A6006D651AC200750097692E /* RegistrationController.m */,
+				A6D3A2FE1AC3711C00D82D02 /* MasterController.h */,
+				A6D3A2FF1AC3711C00D82D02 /* MasterController.m */,
+				A6D3A3011AC3712700D82D02 /* DetailController.h */,
+				A6D3A3021AC3712700D82D02 /* DetailController.m */,
 				A6006D581AC200750097692E /* ArticlesController.h */,
 				A6006D591AC200750097692E /* ArticlesController.m */,
 				5A74D8651AC2E4E500D1EDEC /* ArticleDetailController.h */,
 				5A74D8661AC2E4E500D1EDEC /* ArticleDetailController.m */,
 				A6006D5E1AC200750097692E /* EventsController.h */,
 				A6006D5F1AC200750097692E /* EventsController.m */,
+				A6D3A2FB1AC367C100D82D02 /* EventsDetailController.h */,
+				A6D3A2FC1AC367C100D82D02 /* EventsDetailController.m */,
 				A6006D601AC200750097692E /* ProfileController.h */,
 				A6006D611AC200750097692E /* ProfileController.m */,
 				A6006D621AC200750097692E /* ProfileEditingController.h */,
@@ -270,12 +285,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6006D681AC200750097692E /* ArticlesController.m in Sources */,
+				A6D3A2FD1AC367C100D82D02 /* EventsDetailController.m in Sources */,
 				A6006D6F1AC200750097692E /* RESTRequestsManager.m in Sources */,
 				5A74D85E1AC2B62500D1EDEC /* ErrorHandler.m in Sources */,
+				A6D3A3031AC3712700D82D02 /* DetailController.m in Sources */,
 				A6006D691AC200750097692E /* AuthController.m in Sources */,
 				A6006D6B1AC200750097692E /* EventsController.m in Sources */,
 				A6006D351AC2001D0097692E /* AppDelegate.m in Sources */,
 				A6006D6C1AC200750097692E /* ProfileController.m in Sources */,
+				A6D3A3001AC3711C00D82D02 /* MasterController.m in Sources */,
 				A6006D6A1AC200750097692E /* DummyAPIClass.m in Sources */,
 				A6006D6D1AC200750097692E /* ProfileEditingController.m in Sources */,
 				A6006D6E1AC200750097692E /* RegistrationController.m in Sources */,

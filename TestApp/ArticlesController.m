@@ -14,15 +14,16 @@
 
 @interface ArticlesController ()
 
-@property NSArray *articles;
+//@property NSArray *articles;
 
 @end
 
 @implementation ArticlesController
 
-@synthesize articles;
+//@synthesize articles;
 
 - (void)viewDidLoad {
+    [self setKey:@"articles"];
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -30,7 +31,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    /*
     self.articles = [[NSUserDefaults standardUserDefaults] objectForKey:@"Articles"];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -56,6 +57,7 @@
             }
         }
     });
+     */
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,7 +76,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [self.articles count];
+    return [self.items count];
 }
 
 
@@ -82,23 +84,24 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ArticleCell"];
     
     // Configure the cell...
+    NSLog(@"Configuring cell");
     
-    NSDictionary *dict = [self.articles objectAtIndex:indexPath.row];
+    NSDictionary *dict = [self.items objectAtIndex:indexPath.row];
     
     UIImage *img = [CachedImages getImageFromURL:[dict objectForKey:@"image"] completion:^{
         [tableView reloadData];
         NSLog(@"Reloading Data");
     }];
     if (img) {
-        [(UIImageView *)[cell.contentView viewWithTag:kArtImageTag] setImage:img];
-        [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kArtActivityTag] setHidden:YES];
-        [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kArtActivityTag] stopAnimating];
+        [(UIImageView *)[cell.contentView viewWithTag:kImageTag] setImage:img];
+        [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kActivityTag] setHidden:YES];
+        [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kActivityTag] stopAnimating];
     } else {
-        [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kArtActivityTag] setHidden:NO];
-        [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kArtActivityTag] startAnimating];
+        [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kActivityTag] setHidden:NO];
+        [(UIActivityIndicatorView *)[cell.contentView viewWithTag:kActivityTag] startAnimating];
     }
-    [(UILabel *)[cell.contentView viewWithTag:kArtTitleTag] setText:[dict objectForKey:@"title"]];
-    [(UILabel *)[cell.contentView viewWithTag:kArtBodyTag] setText:[dict objectForKey:@"body"]];
+    [(UILabel *)[cell.contentView viewWithTag:kTitleTag] setText:[dict objectForKey:@"title"]];
+    [(UILabel *)[cell.contentView viewWithTag:kBodyTag] setText:[dict objectForKey:@"body"]];
     
     return cell;
 }
@@ -140,7 +143,7 @@
 
 
 #pragma mark - Navigation
-
+/*
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
@@ -151,15 +154,15 @@
         ArticleDetailController *artDet = (ArticleDetailController *)v.visibleViewController;
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             
-            [artDet setImage:[(UIImageView *)[(UITableViewCell *)[sender contentView] viewWithTag:kArtImageTag] image]];
-            [artDet setTitleString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kArtTitleTag] text]];
-            [artDet setBodyString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kArtBodyTag] text]];
+            [artDet setImage:[(UIImageView *)[(UITableViewCell *)[sender contentView] viewWithTag:kImageTag] image]];
+            [artDet setTitleString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kTitleTag] text]];
+            [artDet setBodyString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kBodyTag] text]];
             
-            NSDictionary *dict = [self.articles objectAtIndex:[self.tableView indexPathForCell:sender].row];
-            [artDet setArticleID:[[dict objectForKey:@"id"] intValue]];
+            NSDictionary *dict = [self.items objectAtIndex:[self.tableView indexPathForCell:sender].row];
+            [artDet setMyID:[[dict objectForKey:@"id"] intValue]];
         }
     }
 }
-
+*/
 
 @end

@@ -1,16 +1,16 @@
 //
-//  ArticleDetailController.h
+//  DetailController.h
 //  TestApp
 //
-//  Created by Alexander Anosov on 25/03/15.
+//  Created by Alexandro on 26/03/15.
 //  Copyright (c) 2015 Alexandro. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "DetailController.h"
 
-@interface ArticleDetailController : DetailController
+@interface DetailController : UIViewController
 
+@property NSString *key;
 @property (strong) UIImage *image;
 @property (strong) NSString *titleString;
 @property (strong) NSString *bodyString;

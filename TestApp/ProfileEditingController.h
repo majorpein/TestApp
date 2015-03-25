@@ -12,7 +12,7 @@
 #define kImageViewTag 13
 #define kTextFieldTag 27
 
-@interface ProfileEditingController : UITableViewController
+@interface ProfileEditingController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak) ProfileController *profileController;
 

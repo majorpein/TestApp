@@ -7,6 +7,8 @@
 //
 
 #import "ProfileEditingController.h"
+#import "RESTRequestsManager.h"
+#import "ErrorHandler.h"
 
 @interface ProfileEditingController ()
 
@@ -30,10 +32,24 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [(UIImageView *)[self.avatarCell.contentView viewWithTag:kImageViewTag] setImage:[(UIImageView *)[self.profileController.avatarNameCell.contentView viewWithTag:kProfileImageTag] image]];
     
-    [(UITextField *)[self.nameCell.contentView viewWithTag:kTextFieldTag] setText:self.profileController.avatarNameCell.textLabel.text];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRecognized)];
+    tap.numberOfTouchesRequired = 1;
+    [self.avatarCell addGestureRecognizer:tap];
+    
+    [(UITextField *)[self.nameCell.contentView viewWithTag:kTextFieldTag] setText:[(UILabel *)[self.profileController.avatarNameCell.contentView viewWithTag:kProfileLabelTag] text]];
     [(UITextField *)[self.emailCell.contentView viewWithTag:kTextFieldTag] setText:self.profileController.emailCell.textLabel.text];
     [(UITextField *)[self.phoneCell.contentView viewWithTag:kTextFieldTag] setText:self.profileController.phoneCell.textLabel.text];
+}
+
+- (void)tapRecognized {
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePickerController.delegate = self;
+    
+    [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,11 +58,52 @@
 }
 
 - (IBAction) onDoneClick:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AuthorizationToken"];
+        
+        NSString *base64image = [UIImagePNGRepresentation([(UIImageView *)[self.avatarCell.contentView viewWithTag:kImageViewTag] image]) base64EncodedStringWithOptions:0];
+        
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:token, @"token", [(UITextField *)[self.nameCell.contentView viewWithTag:kTextFieldTag] text], @"fio", [(UITextField *)[self.emailCell.contentView viewWithTag:kTextFieldTag] text], @"email", [(UITextField *)[self.phoneCell.contentView viewWithTag:kTextFieldTag] text], @"phone", base64image, @"avatar", nil];
+        
+        NSError *error;
+        
+        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:@"edit" method:@"POST" withParams:params error:&error];
+        
+        if (result == nil) {
+            [ErrorHandler handleError:error];
+        } else {
+            NSString *code = [result objectForKey:@"code"];
+            if (![code isEqualToString:@"200"]) {
+                [ErrorHandler handleError:error];
+            }
+        }
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.profileController updateProfile];
+        }];
+    });
 }
 
 - (IBAction) onCancelClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+// This method is called when an image has been chosen from the library or taken from the camera.
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
+    [(UIImageView *)[self.avatarCell.contentView viewWithTag:kImageViewTag] setImage:image];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - Table view data source

@@ -22,15 +22,17 @@
 
 @implementation ArticleDetailController
 
-@synthesize imageView, titleLabel, body, articleID, activityIndicator;
+@synthesize imageView, titleLabel, body, activityIndicator;
 
 - (void)viewDidLoad {
+    [self setKey:@"article"];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     [self.imageView setImage:self.image];
     [self.titleLabel setText:self.titleString];
     [self.body setText:self.bodyString];
-    
+    /*
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AuthorizationToken"];
@@ -54,6 +56,13 @@
             }
         }
     });
+     */
+}
+
+- (void) setInterface:(NSDictionary *)dict {
+    [self setActualImageViewFromURL:[dict objectForKey:@"image"]];
+    [self.titleLabel setText:[dict objectForKey:@"title"]];
+    [self.body setText:[dict objectForKey:@"body"]];
 }
 
 - (void) setActualImageViewFromURL:(NSString *)url {

@@ -39,11 +39,39 @@
         NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:error];
         return data;
     }
-    if ([request hasPrefix:@"profile"]) {
+    if ([request hasPrefix:@"profile"] || [request hasPrefix:@"edit"]) {
         
         NSDictionary *profile = [NSDictionary dictionaryWithObjectsAndKeys:@"Пупкин Василий Петрович", @"fio", @"pupkin@blablabla.com", @"email", @"+79269101010", @"phone", @"http://www.ricciadams.com/articles/osx-color-conversions/test_image.png", @"avatar", nil];
         
         NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"200", @"code", profile, @"user", nil] forKey:@"result"];
+        
+        NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:error];
+        return data;
+    }
+    if ([request isEqualToString:@"events"]) {
+        
+        NSDictionary *event1 = [NSDictionary dictionaryWithObjectsAndKeys:@"1", @"id", @"Название мероприятия 1", @"title", @"<p>Описание мероприятия в формате HTML</p>", @"body", @"http://www.ricciadams.com/articles/osx-color-conversions/test_image.png", @"image", @"2013-03-01T23:59:59", @"date", nil];
+        NSDictionary *event2 = [NSDictionary dictionaryWithObjectsAndKeys:@"1", @"id", @"Название мероприятия 2", @"title", @"<p>Описание мероприятия в формате HTML</p>", @"body", @"http://www.ricciadams.com/articles/osx-color-conversions/test_image.png", @"image", @"2015-04-01T23:59:59", @"date", nil];
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"200", @"code", [NSArray arrayWithObjects:event1, event2, nil], @"events", nil] forKey:@"result"];
+        
+        NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:error];
+        return data;
+    }
+    if ([request hasPrefix:@"events/"] && ![request hasSuffix:@"register"]) {
+        
+        NSString *evID = [request substringFromIndex:7];
+        NSLog(@"Event id: %@", evID);
+        NSDictionary *event1 = [NSDictionary dictionaryWithObjectsAndKeys:evID, @"id", [NSString stringWithFormat:@"Название мероприятия %@", evID], @"title", @"<p>Описание мероприятия в формате HTML</p>", @"body", @"http://www.ricciadams.com/articles/osx-color-conversions/test_image.png", @"image", @"2013-03-01T23:59:59", @"date", nil];
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"200", @"code", event1, @"event", nil] forKey:@"result"];
+        
+        NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:error];
+        return data;
+    }
+    if ([request hasPrefix:@"events/"] && [request hasSuffix:@"register"]) {
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"200", @"code", nil] forKey:@"result"];
         
         NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:error];
         return data;

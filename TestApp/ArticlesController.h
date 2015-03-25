@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MasterController.h"
 
-#define kArtImageTag 7
-#define kArtTitleTag 17
-#define kArtBodyTag 27
-#define kArtActivityTag 37
 
-@interface ArticlesController : UITableViewController
+
+@interface ArticlesController : MasterController
 
 @end

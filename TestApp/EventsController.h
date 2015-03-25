@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MasterController.h"
 
-@interface EventsController : UITableViewController
+#define kEvDateTag 47
+
+@interface EventsController : MasterController
 
 @end

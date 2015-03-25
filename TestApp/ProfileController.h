@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#define kProfileImageTag 17
+#define kProfileLabelTag 7
+
 @interface ProfileController : UITableViewController
 
 @property (weak, readonly) IBOutlet UITableViewCell *avatarNameCell;
