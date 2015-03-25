@@ -62,7 +62,7 @@
         NSLog(@"One more time");
     }];
     if (img) {
-        [self.imageView setImage:self.image];
+        [self.imageView setImage:img];
         [self.activityIndicator setHidden:YES];
         [self.activityIndicator stopAnimating];
     } else {

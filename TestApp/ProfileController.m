@@ -9,6 +9,9 @@
 #import "ProfileController.h"
 #import "ProfileEditingController.h"
 #import "AuthController.h"
+#import "RESTRequestsManager.h"
+#import "ErrorHandler.h"
+#import "CachedImages.h"
 
 @interface ProfileController ()
 
@@ -26,6 +29,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self updateProfile];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,8 +37,49 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) setProfileFromDictionary:(NSDictionary *)myDict {
+- (void) updateProfile {
     
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AuthorizationToken"];
+        NSError *error;
+        
+        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:@"profile" method:@"GET" withParams:[NSDictionary dictionaryWithObject:token forKey:@"token"] error:&error];
+        
+        if (result == nil) {
+            [ErrorHandler handleError:error];
+        } else {
+            
+            NSString *code = [result objectForKey:@"code"];
+            NSDictionary *user = [result objectForKey:@"user"];
+            if (![code isEqualToString:@"200"]) {
+                [ErrorHandler handleError:error];
+            } else {
+                [self.avatarNameCell.textLabel setText:[user objectForKey:@"fio"]];
+                [self.emailCell.textLabel setText:[user objectForKey:@"email"]];
+                [self.phoneCell.textLabel setText:[user objectForKey:@"phone"]];
+                [self setActualImageViewFromURL:[user objectForKey:@"avatar"]];
+            }
+        }
+    });
+}
+
+- (void) setActualImageViewFromURL:(NSString *)url {
+    UIImage *img = [CachedImages getImageFromURL:url completion:^{
+        [self setActualImageViewFromURL:url];
+        NSLog(@"One more time: %@", url);
+    }];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        if (img) {
+            [[self.avatarNameCell.imageView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [self.avatarNameCell.imageView setImage:img];
+        } else {
+            UIActivityIndicatorView *act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            [act setCenter:CGPointMake(self.avatarNameCell.imageView.frame.size.width/2, self.avatarNameCell.imageView.frame.size.height/2)];
+            [act startAnimating];
+            [self.avatarNameCell.imageView addSubview:act];
+        }
+    });
 }
 
 - (IBAction) onSignOutClick:(id)sender {

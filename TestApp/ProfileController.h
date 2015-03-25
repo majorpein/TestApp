@@ -14,6 +14,6 @@
 @property (weak, readonly) IBOutlet UITableViewCell *emailCell;
 @property (weak, readonly) IBOutlet UITableViewCell *phoneCell;
 
-- (void) setProfileFromDictionary:(NSDictionary *)myDict;
+- (void) updateProfile;
 
 @end

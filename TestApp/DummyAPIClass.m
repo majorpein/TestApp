@@ -39,6 +39,15 @@
         NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:error];
         return data;
     }
+    if ([request hasPrefix:@"profile"]) {
+        
+        NSDictionary *profile = [NSDictionary dictionaryWithObjectsAndKeys:@"Пупкин Василий Петрович", @"fio", @"pupkin@blablabla.com", @"email", @"+79269101010", @"phone", @"http://www.ricciadams.com/articles/osx-color-conversions/test_image.png", @"avatar", nil];
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"200", @"code", profile, @"user", nil] forKey:@"result"];
+        
+        NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:error];
+        return data;
+    }
     
     return nil;
 }
