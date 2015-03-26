@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "MasterController.h"
 
-
-
 @interface ArticlesController : MasterController
 
 @end

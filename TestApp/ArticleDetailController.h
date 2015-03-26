@@ -11,9 +11,4 @@
 
 @interface ArticleDetailController : DetailController
 
-@property (strong) UIImage *image;
-@property (strong) NSString *titleString;
-@property (strong) NSString *bodyString;
-@property int myID;
-
 @end

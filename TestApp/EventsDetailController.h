@@ -7,13 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DetailController.h"
 
-@interface EventsDetailController : UIViewController
+@interface EventsDetailController : DetailController
 
-@property (strong) UIImage *image;
-@property (strong) NSString *titleString;
-@property (strong) NSString *bodyString;
 @property (strong) NSString *dateString;
-@property int eventID;
 
 @end

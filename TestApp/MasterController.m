@@ -56,6 +56,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return [self.items count];
+}
 
 #pragma mark - Navigation
 
@@ -64,20 +75,25 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    if ([segue.identifier isEqualToString:@"ArticleDetailSegue"]) {
+    if ([segue.identifier hasSuffix:@"DetailSegue"]) {
         UINavigationController *v = [segue destinationViewController];
-        DetailController *artDet = (DetailController *)v.visibleViewController;
+        DetailController *det = (DetailController *)v.visibleViewController;
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             
-            [artDet setImage:[(UIImageView *)[(UITableViewCell *)[sender contentView] viewWithTag:kImageTag] image]];
-            [artDet setTitleString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kTitleTag] text]];
-            [artDet setBodyString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kBodyTag] text]];
+            [det setImage:[(UIImageView *)[(UITableViewCell *)[sender contentView] viewWithTag:kImageTag] image]];
+            [det setTitleString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kTitleTag] text]];
+            [det setBodyString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kBodyTag] text]];
+            
+            [self additionalSetup:det sender:sender];
             
             NSDictionary *dict = [self.items objectAtIndex:[self.tableView indexPathForCell:sender].row];
-            [artDet setMyID:[[dict objectForKey:@"id"] intValue]];
+            [det setMyID:[[dict objectForKey:@"id"] intValue]];
         }
     }
 }
 
+- (void) additionalSetup:(DetailController *)det sender:(id)sender  {
+    
+}
 
 @end

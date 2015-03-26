@@ -14,13 +14,9 @@
 
 @interface ArticlesController ()
 
-//@property NSArray *articles;
-
 @end
 
 @implementation ArticlesController
-
-//@synthesize articles;
 
 - (void)viewDidLoad {
     [self setKey:@"articles"];
@@ -31,54 +27,12 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    /*
-    self.articles = [[NSUserDefaults standardUserDefaults] objectForKey:@"Articles"];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AuthorizationToken"];
-        
-        NSError *error;
-        
-        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:@"articles" method:@"GET" withParams:[NSDictionary dictionaryWithObject:token forKey:@"token"] error:&error];
-        
-        if (result == nil) {
-            [ErrorHandler handleError:error];
-        } else {
-            
-            NSString *code = [result objectForKey:@"code"];
-            self.articles = [result objectForKey:@"articles"];
-            if (![code isEqualToString:@"200"]) {
-                [ErrorHandler handleError:error];
-            } else {
-                [[NSUserDefaults standardUserDefaults] setObject:articles forKey:@"Articles"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [self.tableView reloadData];
-            }
-        }
-    });
-     */
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return [self.items count];
-}
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ArticleCell"];
@@ -141,27 +95,12 @@
 }
 */
 
-
-#pragma mark - Navigation
 /*
+#pragma mark - Navigation
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
-    if ([segue.identifier isEqualToString:@"ArticleDetailSegue"]) {
-        UINavigationController *v = [segue destinationViewController];
-        ArticleDetailController *artDet = (ArticleDetailController *)v.visibleViewController;
-        if ([sender isKindOfClass:[UITableViewCell class]]) {
-            
-            [artDet setImage:[(UIImageView *)[(UITableViewCell *)[sender contentView] viewWithTag:kImageTag] image]];
-            [artDet setTitleString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kTitleTag] text]];
-            [artDet setBodyString:[(UILabel *)[(UITableViewCell *)[sender contentView] viewWithTag:kBodyTag] text]];
-            
-            NSDictionary *dict = [self.items objectAtIndex:[self.tableView indexPathForCell:sender].row];
-            [artDet setMyID:[[dict objectForKey:@"id"] intValue]];
-        }
-    }
 }
 */
 

@@ -23,39 +23,22 @@
 
 @implementation EventsDetailController
 
-@synthesize imageView, titleLabel, body, eventID, date, indicator;
+@synthesize imageView, titleLabel, body, date, indicator;
 
 - (void)viewDidLoad {
+    [self setKey:@"event"];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.imageView setImage:self.image];
     [self.titleLabel setText:self.titleString];
     [self.body setText:self.bodyString];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AuthorizationToken"];
-        
-        NSError *error;
-        
-        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:[NSString stringWithFormat:@"events/%d", self.eventID] method:@"GET" withParams:[NSDictionary dictionaryWithObject:token forKey:@"token"] error:&error];
-        
-        if (result == nil) {
-            [ErrorHandler handleError:error];
-        } else {
-            
-            NSString *code = [result objectForKey:@"code"];
-            NSDictionary *event = [result objectForKey:@"event"];
-            if (![code isEqualToString:@"200"]) {
-                [ErrorHandler handleError:error];
-            } else {
-                [self setActualImageViewFromURL:[event objectForKey:@"image"]];
-                [self.titleLabel setText:[event objectForKey:@"title"]];
-                [self.body setText:[event objectForKey:@"body"]];
-                [self.date setText:[event objectForKey:@"date"]];
-            }
-        }
-    });
+}
+
+- (void) setInterface:(NSDictionary *)dict {
+    [self setActualImageViewFromURL:[dict objectForKey:@"image"]];
+    [self.titleLabel setText:[dict objectForKey:@"title"]];
+    [self.body setText:[dict objectForKey:@"body"]];
+    [self.date setText:[dict objectForKey:@"date"]];
 }
 
 - (void) setActualImageViewFromURL:(NSString *)url {
@@ -83,7 +66,7 @@
         
         NSError *error;
         
-        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:[NSString stringWithFormat:@"events/%d/register", eventID] method:@"POST" withParams:params error:&error];
+        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:[NSString stringWithFormat:@"events/%d/register", self.myID] method:@"POST" withParams:params error:&error];
         
         if (result == nil) {
             [ErrorHandler handleError:error];

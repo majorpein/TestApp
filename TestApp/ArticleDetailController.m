@@ -32,31 +32,6 @@
     [self.imageView setImage:self.image];
     [self.titleLabel setText:self.titleString];
     [self.body setText:self.bodyString];
-    /*
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AuthorizationToken"];
-        
-        NSError *error;
-        
-        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:[NSString stringWithFormat:@"articles/%d", self.articleID] method:@"GET" withParams:[NSDictionary dictionaryWithObject:token forKey:@"token"] error:&error];
-        
-        if (result == nil) {
-            [ErrorHandler handleError:error];
-        } else {
-            
-            NSString *code = [result objectForKey:@"code"];
-            NSDictionary *article = [result objectForKey:@"article"];
-            if (![code isEqualToString:@"200"]) {
-                [ErrorHandler handleError:error];
-            } else {
-                [self setActualImageViewFromURL:[article objectForKey:@"image"]];
-                [self.titleLabel setText:[article objectForKey:@"title"]];
-                [self.body setText:[article objectForKey:@"body"]];
-            }
-        }
-    });
-     */
 }
 
 - (void) setInterface:(NSDictionary *)dict {
