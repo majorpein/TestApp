@@ -13,7 +13,6 @@
 + (UIImage *) getImageFromURL:(NSString *)imgURL completion:(void (^)())predicate {
     
     NSMutableArray *imgs = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"CachedImages"]];
-    //NSLog(@"Cached images: %@", imgs);
     
     NSDictionary *cachedImg;
     
@@ -22,15 +21,14 @@
             cachedImg = img;
     }
     
-    //NSLog(@"Image found in cache: %@", cachedImg);
-    if (![self isImageActual:cachedImg]) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (![self isImageActual:cachedImg]) {
         
-        if (cachedImg)
-            [imgs removeObject:cachedImg];
+            if (cachedImg)
+                [imgs removeObject:cachedImg];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            UIImage *newImg = [self getFullImgFromURL:imgURL];
-            NSDictionary *newImgDict = [NSDictionary dictionaryWithObjectsAndKeys:imgURL, @"URL", UIImagePNGRepresentation(newImg), @"image", nil];
+            NSDictionary *newImg = [self getFullImgFromURL:imgURL];
+            NSDictionary *newImgDict = [NSDictionary dictionaryWithObjectsAndKeys:imgURL, @"URL", UIImagePNGRepresentation([newImg objectForKey:@"image"]), @"image", [newImg objectForKey:@"length"], @"length", nil];
             NSMutableArray *newImages = [NSMutableArray arrayWithArray:imgs];
             [newImages addObject:newImgDict];
             [[NSUserDefaults standardUserDefaults] setObject:newImages forKey:@"CachedImages"];
@@ -38,10 +36,8 @@
             dispatch_sync(dispatch_get_main_queue(), ^{
                 predicate();
             });
-            //NSLog(@"Image was out of date, downloaded new: %@", cachedImg);
-        });
-    }
-    
+        }
+    });
     if (cachedImg != nil) {
         NSLog(@"returning cached image");
         return [UIImage imageWithData:[cachedImg objectForKey:@"image"]];
@@ -51,17 +47,38 @@
     return nil;
 }
 
-+ (UIImage *) getFullImgFromURL:(NSString *)imgURL {
++ (NSDictionary *) getFullImgFromURL:(NSString *)imgURL {
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
-    return [UIImage imageWithData:data];
+    return [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageWithData:data], @"image", [NSNumber numberWithUnsignedLong:[data length]], @"length", nil];
 }
 
 + (BOOL) isImageActual:(NSDictionary *)imgDict {
     if (!imgDict)
         return NO;
     
-    return YES;
+    NSError *error;
+    
+    NSURL *url = [NSURL URLWithString:[imgDict objectForKey:@"URL"]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    
+    [request setHTTPMethod:@"HEAD"];
+    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    
+    NSURLResponse *response;
+    
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    unsigned long imageLength = [[imgDict objectForKey:@"length"] unsignedLongValue];
+    
+    long long contentLength = [response expectedContentLength];
+    
+    if (imageLength == contentLength) {
+        NSLog(@"Image is actual");
+        return YES;
+    }
+    NSLog(@"Image is not actual");
+    return NO;
 }
 
 @end
