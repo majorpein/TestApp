@@ -30,9 +30,13 @@
         
         NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"AuthorizationToken"];
         
+        NSDictionary *params = nil;
+        if (token != nil)
+            params = [NSDictionary dictionaryWithObject:token forKey:@"token"];
+        
         NSError *error;
         
-        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:self.key method:@"GET" withParams:[NSDictionary dictionaryWithObject:token forKey:@"token"] error:&error];
+        NSDictionary *result = [RESTRequestsManager sendSynchroniousRequestWithString:self.key method:@"GET" withParams:params error:&error];
         
         if (result == nil) {
             [ErrorHandler handleError:error];

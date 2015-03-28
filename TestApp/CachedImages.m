@@ -28,14 +28,16 @@
                 [imgs removeObject:cachedImg];
         
             NSDictionary *newImg = [self getFullImgFromURL:imgURL];
-            NSDictionary *newImgDict = [NSDictionary dictionaryWithObjectsAndKeys:imgURL, @"URL", UIImagePNGRepresentation([newImg objectForKey:@"image"]), @"image", [newImg objectForKey:@"length"], @"length", nil];
-            NSMutableArray *newImages = [NSMutableArray arrayWithArray:imgs];
-            [newImages addObject:newImgDict];
-            [[NSUserDefaults standardUserDefaults] setObject:newImages forKey:@"CachedImages"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                predicate();
-            });
+            if (newImg != nil) {
+                NSDictionary *newImgDict = [NSDictionary dictionaryWithObjectsAndKeys:imgURL, @"URL", UIImagePNGRepresentation([newImg objectForKey:@"image"]), @"image", [newImg objectForKey:@"length"], @"length", nil];
+                NSMutableArray *newImages = [NSMutableArray arrayWithArray:imgs];
+                [newImages addObject:newImgDict];
+                [[NSUserDefaults standardUserDefaults] setObject:newImages forKey:@"CachedImages"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    predicate();
+                });
+            }
         }
     });
     if (cachedImg != nil) {
@@ -50,7 +52,9 @@
 + (NSDictionary *) getFullImgFromURL:(NSString *)imgURL {
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imgURL]];
-    return [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageWithData:data], @"image", [NSNumber numberWithUnsignedLong:[data length]], @"length", nil];
+    if (data != nil)
+        return [NSDictionary dictionaryWithObjectsAndKeys:[UIImage imageWithData:data], @"image", [NSNumber numberWithUnsignedLong:[data length]], @"length", nil];
+    return nil;
 }
 
 + (BOOL) isImageActual:(NSDictionary *)imgDict {
@@ -73,7 +77,7 @@
     
     long long contentLength = [response expectedContentLength];
     
-    if (imageLength == contentLength) {
+    if (imageLength == contentLength && contentLength != 0) {
         NSLog(@"Image is actual");
         return YES;
     }
